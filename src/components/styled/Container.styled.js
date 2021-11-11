@@ -5,6 +5,9 @@ const Container = styled.div`
   max: 100%;
   padding: 0 20px;
   margin: 0 auto;
+  &.card: {
+    color: red;
+  }
 `;
 
 export default Container;
