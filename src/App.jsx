@@ -1,15 +1,11 @@
 import * as React from 'react';
-import { useState } from 'react';
-import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
 import GlobalStyles from '@mui/material/GlobalStyles';
-import Container from '@mui/material/Container';
 import AppBar from './components/AppBar';
-import { Routes, Route, Link } from 'react-router-dom';
-import Card from './components/Card';
+import { Routes, Route} from 'react-router-dom';
 import PureDnd from './components/PureDnd';
 import Home from './components/Home';
+import Beautefull from './components/Beautefull';
 
 const box = {
   height: '700px',

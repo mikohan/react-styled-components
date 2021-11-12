@@ -16,7 +16,9 @@ export default function MyAppBar() {
     >
       <Toolbar sx={{ flexWrap: 'wrap' }}>
         <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+          <Link to="/">
           Company name
+          </Link>
         </Typography>
         <nav>
           <MuiLink
