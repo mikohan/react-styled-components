@@ -19,6 +19,47 @@ export enum RegionEnum {
 	'VILLAGE',
 }
 
+export enum PromoEnum {
+	'MARKET_COUPON',
+	'MARKET_DEAL',
+	'MARKET_COIN',
+}
+
+export enum VAT {
+	'NO_VAT',
+	'VAT_0',
+	'VAT_10',
+	'VAT_10_110',
+	'VAT_18',
+	'VAT_18_118',
+	'VAT_20',
+	'VAT_20_120',
+}
+
+export interface IPromo {
+	marketPromoId: string;
+	subsidy: number;
+	type: PromoEnum;
+}
+export interface IItem {
+	id: number;
+	feedId: number;
+	offerId: string;
+	price: number;
+	'buyer-price': number;
+	subsidy: number;
+	count: number;
+	delivery: boolean;
+	params: string;
+	vat: VAT;
+	fulfilmentShopId: number;
+	sku: string;
+	shopSku: string;
+	warehouseId: number;
+	partnerWarehouseId: string;
+	promos: IPromo[];
+}
+
 export interface IOrderBase {}
 
 export interface IShipment {
@@ -43,73 +84,39 @@ export interface IDelivery {
 	region: IRegion;
 }
 
-//   shipments:
-//   [
-//     {
-//       "id": {int64},
-//       "shipmentDate": "{date}"
-//     },
-//     ...
-//   ],
-//   "serviceName": "{string}",
-//   "type": "{enum}",
-//   "region":
-//   {
-//     "id": {int32},
-//     "name": "{string}",
-//     "type": "{enum}",
-//     "parent":
-//     {
-//       "id": {int32},
-//       "name": "{string}",
-//       "type": "{enum}",
-//       "parent":
-//       {
-//         ...
-//       }
-//     }
-//   }
-// },
+enum Currency {
+	'RUR',
+}
+enum PaymentType {
+	'PREPAID',
+	'POSTPAID',
+}
+enum PaymentMethod {
+	'YANDEX',
+	'APPLE_PAY',
+	'GOOGLE_PAY',
+	'CREDIT',
+	'TINKOFF_CREDIT',
+	'EXTERNAL_CERTIFICATE',
+	'CARD_ON_DELIVERY',
+	'CASH_ON_DELIVERY',
+}
+enum TaxSystem {
+	'ECHN',
+	'ENVD',
+	'OSN',
+	'PSN',
+	'USN',
+	'USN_MINUS_COST',
+}
 
-// const order = {
-//   "order":
-//   {
-//     "currency": "{enum}",
-//     "fake": {boolean},
-//     "id": {int64},
-//     "paymentType": "{enum}",
-//     "paymentMethod": "{enum}",
-//     "taxSystem": "{enum}",
-//     "items":
-//     [
-//       {
-//         "id": {int64},
-//         "feedId": {int64},
-//         "offerId": "{string}",
-//         "price": {double},
-//         "buyer-price": {double},
-//         "subsidy": {double},
-//         "count": {int32},
-//         "delivery": {boolean},
-//         "params": "{string}",
-//         "vat": "{enum}",
-//         "fulfilmentShopId": {int64},
-//         "sku": "{string}",
-//         "shopSku": "{string}",
-//         "warehouseId": {int64},
-//         "partnerWarehouseId": "{string}"
-//         "promos":
-//         [
-//           {
-//             "marketPromoId": "{string}",
-//             "subsidy": {float},
-//             "type": "{enum}",
-//           },
-//           ...
-//         ]
-//       },
-//       ...
-//     ],
-//     "notes": "{string}"
-//   }
-// }
+export interface IOrder {
+	currency: Currency;
+	fake: boolean;
+	id: number;
+	paymentType: PaymentType;
+	paymentMethod: PaymentMethod;
+	taxSystem: TaxSystem;
+	items: IItem[];
+	notes: string;
+}
