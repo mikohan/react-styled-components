@@ -59,10 +59,22 @@ export interface IItem {
 	partnerWarehouseId: string;
 	promos: IPromo[];
 }
+interface IBoxItem {
+	id: number;
+	count: number;
+}
+interface IBoxes {
+	id: number;
+	weight: number;
+	height: number;
+	depth: number;
+	items: IBoxItem[];
+}
 
 export interface IShipment {
 	id: number;
 	shipmentDate: Date;
+	boxes: IBoxes;
 }
 
 export interface IRegion {
@@ -107,6 +119,44 @@ enum TaxSystem {
 	'USN',
 	'USN_MINUS_COST',
 }
+enum OrderStatus {
+	'CANCELLED',
+	'DELIVERED',
+	'DELIVERY',
+	'PICKUP',
+	'PROCESSING',
+	'PENDING',
+}
+
+enum OrderSubStatus {
+	'STARTED',
+	'ANTIFRAUD',
+	'DELIVERY_SERVICE_UNDELIVERED',
+	'PENDING_EXPIRED',
+	'PROCESSING_EXPIRED',
+	'REPLACING_ORDER',
+	'RESERVATION_EXPIRED',
+	'RESERVATION_FAILED',
+	'SHOP_FAILED',
+	'SHOP_PENDING_CANCELLED',
+	'WAREHOUSE_FAILED_TO_SHIP',
+	'USER_CHANGED_MIND',
+	'USER_NOT_PAID',
+	'USER_REFUSED_DELIVERY',
+	'USER_REFUSED_PRODUCT',
+	'USER_REFUSED_QUALITY',
+	'USER_UNREACHABLE',
+	'PICKUP_SERVICE_RECEIVED',
+	'PICKUP_USER_RECEIVED',
+}
+
+interface IInstance {
+	cis: string;
+}
+
+interface IOrderStatusItem extends IItem {
+	instances: IInstance[];
+}
 
 export interface IOrder {
 	currency: Currency;
@@ -115,6 +165,17 @@ export interface IOrder {
 	paymentType: PaymentType;
 	paymentMethod: PaymentMethod;
 	taxSystem: TaxSystem;
+	delivery: IDelivery;
 	items: IItem[];
 	notes: string;
+}
+
+export interface IOrederStatus extends IOrder {
+	creationDate: Date;
+	itemsTotal: number;
+	status: OrderStatus;
+	substatus: OrderSubStatus;
+	total: number;
+	subsidyTotal: number;
+	items: IOrderStatusItem[];
 }
