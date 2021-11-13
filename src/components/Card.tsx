@@ -7,28 +7,24 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import { createTheme } from '@mui/material/styles';
+import { customTheme } from '../Theme';
 
 // const fontSize = 14; // px
 // const htmlFontSize = 16;
 // const coef = fontSize / 14;
 
-const customTheme = createTheme({
-	// typography: {
-	// 	pxToRem: (size) => `${(size / htmlFontSize) * coef}rem`,
-	// },
-	// palette: {},
-});
+interface ExpandMoreProps extends IconButtonProps {
+	expand: boolean;
+}
 
-const ExpandMore = styled((props) => {
+const ExpandMore = styled((props: ExpandMoreProps) => {
 	const { expand, ...other } = props;
 	return <IconButton {...other} />;
 })(({ theme, expand }) => ({
@@ -39,7 +35,13 @@ const ExpandMore = styled((props) => {
 	}),
 }));
 
-export default function BoxSx({ title }) {
+interface ICardProps {
+	title: string;
+	cardColor: string;
+	isDragging: boolean;
+}
+
+export default function BoxSx({ title, cardColor, isDragging }: ICardProps) {
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
 	};
@@ -47,16 +49,12 @@ export default function BoxSx({ title }) {
 
 	return (
 		<ThemeProvider theme={customTheme}>
-			<Card>
+			<Card
+				sx={{
+					bgcolor: isDragging ? 'lightSuccess.main' : cardColor,
+				}}
+			>
 				<CardHeader
-					avatar={
-						<Avatar
-							sx={{ bgcolor: 'theme.pallette.primary' }}
-							aria-label="recipe"
-						>
-							R
-						</Avatar>
-					}
 					action={
 						<IconButton aria-label="settings">
 							<MoreVertIcon />
@@ -65,11 +63,11 @@ export default function BoxSx({ title }) {
 					title={title}
 					subheader="September 14, 2016"
 				/>
-				<CardContent>
+				{/* <CardContent>
 					<Typography variant="body2" color="text.secondary">
 						{title}
 					</Typography>
-				</CardContent>
+				</CardContent> */}
 				<CardActions disableSpacing>
 					<IconButton aria-label="add to favorites">
 						<FavoriteIcon />

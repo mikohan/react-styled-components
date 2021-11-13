@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { styled, createTheme, ThemeProvider } from '@mui/system';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 import Card from './Card';
 
@@ -22,13 +22,14 @@ const itemsFromBackend = [
 ];
 
 const columnsFromBackend = {
-	[uuid()]: { id: uuid(), name: 'Todo', items: itemsFromBackend },
-	[uuid()]: { id: uuid(), name: 'In Progress', items: [] },
-	[uuid()]: { id: uuid(), name: 'Done', items: [] },
-	[uuid()]: { id: uuid(), name: 'All Done', items: [] },
+	[uuid()]: { id: uuid(), name: 'InBox', items: itemsFromBackend },
+	[uuid()]: { id: uuid(), name: 'IN PROGRESS', items: [] },
+	[uuid()]: { id: uuid(), name: 'NOT IN STOCK', items: [] },
+	[uuid()]: { id: uuid(), name: 'IN STOCK', items: [] },
+	[uuid()]: { id: uuid(), name: 'READY TO SHIP', items: [] },
 };
 
-const onDragEnd = (result, columns, setColumns) => {
+const onDragEnd = (result: any, columns: any, setColumns: any) => {
 	if (!result.destination) return;
 	const { source, destination } = result;
 
@@ -77,6 +78,7 @@ const MyThemeComponent = styled('div')(({ theme }) => ({
 
 export default function ThemeUsage() {
 	const [columns, setCoulumns] = useState(columnsFromBackend);
+	const cardColor = 'lightSuccess.light';
 	return (
 		<ThemeProvider theme={customTheme}>
 			<MyThemeComponent>
@@ -105,7 +107,7 @@ export default function ThemeUsage() {
 										{(provided, snapshot) => {
 											return (
 												<div
-													{...provided.droppablePropsl}
+													{...provided.droppableProps}
 													ref={provided.innerRef}
 													style={{
 														background:
@@ -114,7 +116,7 @@ export default function ThemeUsage() {
 																: 'lightgray',
 														padding: 4,
 														width: 250,
-														minHeight: 700,
+														minHeight: 1000,
 													}}
 												>
 													{column.items.map(
@@ -146,15 +148,15 @@ export default function ThemeUsage() {
 																					borderRadius: 10,
 																					userSelect:
 																						'none',
-																					padding: 8,
+																					padding: 0,
 																					margin: '0 0 8px 0',
 																					minWidth:
 																						'50px',
 
 																					background:
 																						snapshot.isDragging
-																							? '#263b4a'
-																							: '#356c86',
+																							? '#1769aa'
+																							: '#2196f3',
 																					color: '#fff',
 																					...provided
 																						.draggableProps
@@ -162,12 +164,14 @@ export default function ThemeUsage() {
 																				}}
 																			>
 																				<Card
-																					sx={{
-																						background:
-																							'blue',
-																					}}
 																					title={
 																						item.content
+																					}
+																					isDragging={
+																						snapshot.isDragging
+																					}
+																					cardColor={
+																						cardColor
 																					}
 																				/>
 																			</div>
