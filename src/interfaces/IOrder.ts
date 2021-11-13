@@ -60,8 +60,6 @@ export interface IItem {
 	promos: IPromo[];
 }
 
-export interface IOrderBase {}
-
 export interface IShipment {
 	id: number;
 	shipmentDate: Date;
